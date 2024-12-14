@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/14 22:55:52 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/15 01:10:19 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ START_TEST(test_one_equals_one)
     ck_assert_int_eq(root_node->value, 10);
 
     bt_insert_node(&root_node, 10);
-        ck_assert_ptr_null(root_node->left);
-        ck_assert_ptr_null(root_node->right);
+    ck_assert_ptr_null(root_node->left);
+    ck_assert_ptr_null(root_node->right);
 
     bt_insert_node(&root_node, 1);
-        ck_assert_int_eq(root_node->left->value, 1);
-        ck_assert_ptr_nonnull(root_node->left);
+    ck_assert_int_eq(root_node->left->value, 1);
+    ck_assert_ptr_nonnull(root_node->left);
 
     bt_insert_node(&root_node, 11);
-        ck_assert_ptr_nonnull(root_node->right);
-        ck_assert_int_eq(root_node->right->value, 11);
+    ck_assert_ptr_nonnull(root_node->right);
+    ck_assert_int_eq(root_node->right->value, 11);
 }
 END_TEST
 
