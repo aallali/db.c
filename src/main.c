@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/14 18:33:08 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/14 23:15:54 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,29 @@ Rules of a Binary Search Tree:
  
 int main()
 {
-    treeNode *rootNode = NULL;
+    btree *root_node = NULL;
 
-    insert_node(&rootNode, 7);
+    bt_insert_node(&root_node, 7);
 
-    insert_node(&rootNode, 5);
-    insert_node(&rootNode, 12);
+    bt_insert_node(&root_node, 5);
+    bt_insert_node(&root_node, 12);
 
-    insert_node(&rootNode, 3);
-    insert_node(&rootNode, 6);
-    insert_node(&rootNode, 9);
-    insert_node(&rootNode, 15);
+    bt_insert_node(&root_node, 3);
+    bt_insert_node(&root_node, 6);
+    bt_insert_node(&root_node, 9);
+    bt_insert_node(&root_node, 15);
 
-    insert_node(&rootNode, 1);
-    insert_node(&rootNode, 4);
-    insert_node(&rootNode, 8);
-    insert_node(&rootNode, 10);
-    insert_node(&rootNode, 17);
+    bt_insert_node(&root_node, 1);
+    bt_insert_node(&root_node, 4);
+    bt_insert_node(&root_node, 8);
+    bt_insert_node(&root_node, 10);
+    bt_insert_node(&root_node, 17);
 
-    treeNode *lastOne;
-    insert_node(&lastOne, 13);
-    treeNode *trgt = find(17, rootNode);
-    trgt->left = lastOne;
-    print_tree(rootNode, 0);
+    btree *last_branch;
+    bt_insert_node(&last_branch, 13);
+    btree *trgt = bt_find(17, root_node);
+    trgt->left = last_branch;
+    print_tree(root_node, 0);
  
 
     /*
@@ -68,16 +68,15 @@ int main()
                    /
                   13
     */
-    printf("Height of first tree is [%d]\n", calculate_height(rootNode));
+    printf("Height of first tree is [%d]\n", bt_calculate_height(root_node));
     printf("------------------------ One Side Tree------------------\n");
-    treeNode *oneSide = NULL;
+    btree *one_sided = NULL;
 
-    insert_node(&oneSide, 1);
-    insert_node(&oneSide, 2);
-    insert_node(&oneSide, 3);
-    insert_node(&oneSide, 4);
-    // print_tree(oneSide, 0);
-    /*
+    bt_insert_node(&one_sided, 1);
+    bt_insert_node(&one_sided, 2);
+    bt_insert_node(&one_sided, 3);
+    bt_insert_node(&one_sided, 4);
+/*
              1
               \
                2
@@ -85,11 +84,32 @@ int main()
                  3
                   \
                    4
-    */
+*/
+    print_tree(one_sided, 0);
+/*
+------------------------ One Side Tree------------------
+value: [1]
+left:
+       ---<empty>---
+right:
+       value: [2]
+       left:
+              ---<empty>---
+       right:
+              value: [3]
+              left:
+                     ---<empty>---
+              right:
+                     value: [4]
+                     left:
+                            ---<empty>---
+                     right:
+                            ---<empty>---
+*/
 
-    printf("Height of second tree is [%d]\n", calculate_height(oneSide));
 
-   
+    printf("Height of second tree is [%d]\n", bt_calculate_height(one_sided));
+
     return 0;
 }
  
