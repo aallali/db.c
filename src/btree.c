@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/14 18:31:49 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/14 23:10:37 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void print_n_tabs(int n)
         printf("       ");
 }
 
-void print_tree(treeNode *node, int level)
+void print_tree(btree *node, int level)
 {
     if (node == NULL)
     {
@@ -26,8 +26,9 @@ void print_tree(treeNode *node, int level)
         printf("---<empty>---\n");
         return;
     }
+
     print_n_tabs(level);
-    printf("value-->[%d]\n", node->value);
+    printf("value: [%d]\n", node->value);
 
     print_n_tabs(level);
     printf("left:\n");
@@ -39,48 +40,51 @@ void print_tree(treeNode *node, int level)
     return;
 }
 
-treeNode *createTree(int value)
+btree *bt_create_tree(int value)
 {
-    treeNode *freshOne = (treeNode *)malloc(sizeof(treeNode));
-    freshOne->value = value;
-    freshOne->left = NULL;
-    freshOne->right = NULL;
-    return freshOne;
+    btree *fresh_node = (btree *)malloc(sizeof(btree));
+
+    fresh_node->value = value;
+    fresh_node->left = NULL;
+    fresh_node->right = NULL;
+
+    return fresh_node;
 }
 
-treeNode *find(int target, treeNode *startNode)
+btree *bt_find(int target, btree *head_node)
 {
-    if (startNode == NULL)
+    if (head_node == NULL)
         return NULL;
 
-    if (startNode->value < target)
-        return find(target, startNode->right);
+    if (head_node->value < target)
+        return bt_find(target, head_node->right);
 
-    if (startNode->value > target)
-        return find(target, startNode->left);
+    if (head_node->value > target)
+        return bt_find(target, head_node->left);
 
-    return startNode;
+    return head_node;
 }
 
-bool insert_node(treeNode **nodePtr, int v)
+bool bt_insert_node(btree **node_ptr, int value)
 {
-    treeNode *root = *nodePtr;
+    btree *root = *node_ptr;
 
     if (root == NULL)
     {
-        *nodePtr = createTree(v);
+        *node_ptr = bt_create_tree(value);
         return true;
     }
 
-    if (v > root->value)
-        return insert_node(&(root->right), v);
-    if (v < root->value)
-        return insert_node(&(root->left), v);
+    if (value > root->value)
+        return bt_insert_node(&(root->right), value);
+
+    if (value < root->value)
+        return bt_insert_node(&(root->left), value);
 
     return true;
 }
 
-int calculate_height(treeNode *node)
+int bt_calculate_height(btree *node)
 {
     if (node == NULL)
         return 0;
@@ -88,8 +92,8 @@ int calculate_height(treeNode *node)
     int left_height = 0;
     int right_height = 0;
 
-    left_height = calculate_height(node->left);
-    right_height = calculate_height(node->right);
+    left_height = bt_calculate_height(node->left);
+    right_height = bt_calculate_height(node->right);
 
     return (left_height > right_height ? left_height : right_height) + 1;
 }
