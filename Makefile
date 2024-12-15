@@ -6,15 +6,15 @@
 #    By: aallali <hi@allali.me>                   ██  █████  █████    _██      #
 #                                                 ██ _____█ _____█   _██       #
 #    Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma     #
-#    Updated: 2024/12/14 22:47:41 by aallali      -------- 1337.ma -------     #
+#    Updated: 2024/12/15 23:24:21 by aallali      -------- 1337.ma -------     #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -Iincludes
-TFLAGS = -lcheck -lsubunit -lm -pthread
-
+TFLAGS = -DUNIT_TEST
+# -lcheck -lsubunit -lm -pthread 
 # Files and target
 SRCS = $(filter-out src/main.c, $(wildcard src/*.c))
 OBJS = $(SRCS:.c=.o)
@@ -31,14 +31,15 @@ $(TARGET): $(OBJS) $(MAIN:.c=.o)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(MAIN:.c=.o)
 	./$(TARGET)
 
- 
-
-
+cleanObjects:
+	rm -f $(OBJS)
+	
 # Run unit tests
 test: $(OBJS)
 	@mkdir -p build     
 	@$(CC) $(CFLAGS) $(TEST_SRCS) $(OBJS) -o $(TARGET_TEST) $(TFLAGS)
-	@$(TARGET_TEST)
+	@make cleanObjects
+	@$(TARGET_TEST) --unittest
 
 # Clean up
 clean:

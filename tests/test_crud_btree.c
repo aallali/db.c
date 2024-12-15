@@ -6,35 +6,45 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/15 01:10:55 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/15 23:22:25 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <check.h>
+#include "test.h"
 #include "btree.h"
 
-// Test creation of nodes
-START_TEST(test_one_equals_one)
+int main()
+{
+    return 0;
+}
+
+TEST_CASE(test_bt_create_tree)
 {
     btree *root_node = bt_create_tree(10);
-    ck_assert_int_eq(root_node->value, 10);
-
     bt_insert_node(&root_node, 10);
-    ck_assert_ptr_null(root_node->left);
-    ck_assert_ptr_null(root_node->right);
+    TEST_EQUAL(root_node->value, 10);
+    TEST_EQUAL(root_node->left, NULL);
+    TEST_EQUAL(root_node->right, NULL);
+}
+
+TEST_CASE(test_bt_insert_node)
+{
+    btree *root_node = bt_create_tree(10);
+    bt_insert_node(&root_node, 10);
+    TEST_EQUAL(root_node->value, 10);
+    TEST_EQUAL(root_node->left, NULL);
+    TEST_EQUAL(root_node->right, NULL);
 
     bt_insert_node(&root_node, 1);
-    ck_assert_int_eq(root_node->left->value, 1);
-    ck_assert_ptr_nonnull(root_node->left);
+    TEST_EQUAL(root_node->left->value, 1);
+    TEST_NOTEQUAL(root_node->left, NULL);
 
     bt_insert_node(&root_node, 11);
-    ck_assert_ptr_nonnull(root_node->right);
-    ck_assert_int_eq(root_node->right->value, 11);
+    TEST_NOTEQUAL(root_node->right, NULL);
+    TEST_EQUAL(root_node->right->value, 11);
 }
-END_TEST
 
-// Test height of nodes
-START_TEST(test_bt_calculate_height)
+TEST_CASE(test_bt_calculate_height)
 {
     btree *node;
     int height;
@@ -45,11 +55,10 @@ START_TEST(test_bt_calculate_height)
     for (int i = 0; i < height; i++)
         bt_insert_node(&node, i);
 
-    ck_assert_int_eq(bt_calculate_height(node), height);
+    TEST_EQUAL(bt_calculate_height(node), height);
 }
 
-// Test find node
-START_TEST(test_bt_find)
+TEST_CASE(test_bt_find)
 {
     btree *node;
     int height;
@@ -61,41 +70,23 @@ START_TEST(test_bt_find)
         bt_insert_node(&node, i);
 
     // last node in tree
-    ck_assert_int_eq(bt_find(height - 1, node)->value, height - 1);
+    TEST_EQUAL(bt_find(height - 1, node)->value, height - 1);
     // first node (head)
-    ck_assert_int_eq(bt_find(0, node)->value, 0);
+    TEST_EQUAL(bt_find(0, node)->value, 0);
     // doesn't exists
-    ck_assert_ptr_null(bt_find(height, node));
-}
-END_TEST
-
-Suite *sample_suite(void)
-{
-    Suite *s;
-    TCase *tc_core;
-
-    s = suite_create("Sample");
-    tc_core = tcase_create("Core");
-
-    tcase_add_test(tc_core, test_one_equals_one);
-    tcase_add_test(tc_core, test_bt_calculate_height);
-    tcase_add_test(tc_core, test_bt_find);
-
-
-    suite_add_tcase(s, tc_core);
-
-    return s;
+    TEST_EQUAL(bt_find(height, node), NULL);
 }
 
-int main(void)
+TEST_CASE(test_bt_lvl_order_traverse)
 {
-    int number_failed;
-    Suite *s = sample_suite();
-    SRunner *sr = srunner_create(s);
+    btree *node;
+    int height;
 
-    srunner_run_all(sr, CK_NORMAL);
-    number_failed = srunner_ntests_failed(sr);
-    srunner_free(sr);
+    node = NULL;
+    height = 10;
 
-    return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+    for (int i = 0; i < height; i++)
+        bt_insert_node(&node, i);
+
+    bt_lvl_order_traverse(node);
 }
