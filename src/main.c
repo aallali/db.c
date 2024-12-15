@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/14 23:15:54 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/15 01:08:28 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int main()
     bt_insert_node(&last_branch, 13);
     btree *trgt = bt_find(17, root_node);
     trgt->left = last_branch;
-    print_tree(root_node, 0);
+    print_tree(root_node);
  
 
     /*
@@ -85,7 +85,7 @@ int main()
                   \
                    4
 */
-    print_tree(one_sided, 0);
+    print_tree(one_sided);
 /*
 ------------------------ One Side Tree------------------
 value: [1]
