@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/15 01:16:41 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/15 01:53:59 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,30 @@ int bt_calculate_height(btree *node)
     right_height = bt_calculate_height(node->right);
 
     return (left_height > right_height ? left_height : right_height) + 1;
+}
+
+static void bt_print_lvl(btree *node, int level)
+{
+    if (node == NULL)
+        return;
+
+    if (level == 1)
+        printf("%d ", node->value);
+
+    bt_print_lvl(node->left, level - 1);
+    bt_print_lvl(node->right, level - 1);
+}
+
+void bt_lvl_order_traverse(btree *node)
+{
+    int height;
+
+    height = bt_calculate_height(node);
+
+    for (int i = 1; i <= height; i++)
+    {
+        printf("Level %d => ", i);
+        bt_print_lvl(node, i);
+        printf("\n");
+    }
 }
