@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/14 23:10:37 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/15 01:16:41 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void print_n_tabs(int n)
         printf("       ");
 }
 
-void print_tree(btree *node, int level)
+static void print_tree_recursive(btree *node, int level)
 {
     if (node == NULL)
     {
@@ -32,12 +32,17 @@ void print_tree(btree *node, int level)
 
     print_n_tabs(level);
     printf("left:\n");
-    print_tree(node->left, level + 1);
+    print_tree_recursive(node->left, level + 1);
 
     print_n_tabs(level);
     printf("right:\n");
-    print_tree(node->right, level + 1);
+    print_tree_recursive(node->right, level + 1);
     return;
+}
+
+void print_tree(btree *node)
+{
+    print_tree_recursive(node, 0);
 }
 
 btree *bt_create_tree(int value)

@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/14 22:56:15 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/15 01:05:58 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct btree
 
 void print_n_tabs(int n);
 
-void print_tree(btree *node, int level);
+void print_tree(btree *node);
 
 btree *bt_create_tree(int value);
 
