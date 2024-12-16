@@ -14,7 +14,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -Iincludes
 TFLAGS = -DUNIT_TEST
-# -lcheck -lsubunit -lm -pthread 
+
 # Files and target
 SRCS = $(filter-out src/main.c, $(wildcard src/*.c))
 OBJS = $(SRCS:.c=.o)
@@ -28,17 +28,16 @@ TARGET_TEST = ./build/test.bin
 # Build target
 all: $(TARGET)
 $(TARGET): $(OBJS) $(MAIN:.c=.o)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(MAIN:.c=.o)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(MAIN:.c=.o)
 	./$(TARGET)
 
 cleanObjects:
 	rm -f $(OBJS)
 	
-# Run unit tests
 test: $(OBJS)
 	@mkdir -p build     
 	@$(CC) $(CFLAGS) $(TEST_SRCS) $(OBJS) -o $(TARGET_TEST) $(TFLAGS)
-	@make cleanObjects
+	@rm src/*.o
 	@$(TARGET_TEST) --unittest
 
 # Clean up
