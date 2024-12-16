@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/16 03:10:35 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/16 03:28:21 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,51 @@ void bt_lvl_order_traverse(btree *node, void (*callback)(btree *node))
     {
         bt_print_lvl(node, i, callback);
     }
+}
+
+static btree *bt_temp_delete_node_check(btree *node)
+{
+    if (node->left != NULL && node->right != NULL)
+    {
+        printf("[WARNING] Two-child deletion not yet implemented\n");
+        return node;
+    }
+    if (node->left != NULL)
+    {
+        btree *temp_node = node->left;
+        free(node);
+        return temp_node;
+    }
+    if (node->right != NULL)
+    {
+        btree *temp_node = node->right;
+        free(node);
+        return temp_node;
+    }
+    return NULL;
+}
+void bt_delete_node(btree **head_node, int target)
+{
+    if (head_node == NULL)
+        return;
+
+    if ((*head_node)->right != NULL && (*head_node)->right->value == target)
+    {
+ 
+        (*head_node)->right = bt_temp_delete_node_check((*head_node)->right);
+        return;
+    }
+    if ((*head_node)->left != NULL && (*head_node)->left->value == target)
+    {
+
+        (*head_node)->left = bt_temp_delete_node_check((*head_node)->left);
+        return;
+    }
+    if ((*head_node)->value < target)
+        return bt_delete_node(&(*head_node)->right, target);
+
+    if ((*head_node)->value > target)
+        return bt_delete_node(&(*head_node)->left, target);
+
+    return;
 }
