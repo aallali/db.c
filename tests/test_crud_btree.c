@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/15 23:22:25 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/16 02:13:38 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,14 @@ TEST_CASE(test_bt_find)
     // doesn't exists
     TEST_EQUAL(bt_find(height, node), NULL);
 }
-
+int temp_counter = 0;
+static void test_count_nodes_on_traversal(btree *node)
+{
+    // (void)v;
+    printf("%d ", node->value);
+    temp_counter++;
+    return;
+}
 TEST_CASE(test_bt_lvl_order_traverse)
 {
     btree *node;
@@ -85,8 +92,9 @@ TEST_CASE(test_bt_lvl_order_traverse)
     node = NULL;
     height = 10;
 
-    for (int i = 0; i < height; i++)
-        bt_insert_node(&node, i);
-
-    bt_lvl_order_traverse(node);
+    for (int i = 1; i <= height; i++)
+        bt_insert_node(&node, i * 11);
+        
+    bt_lvl_order_traverse(node, test_count_nodes_on_traversal);
+    TEST_EQUAL(temp_counter, height);
 }

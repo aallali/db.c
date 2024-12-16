@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/15 01:53:59 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/16 03:10:35 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,19 +103,26 @@ int bt_calculate_height(btree *node)
     return (left_height > right_height ? left_height : right_height) + 1;
 }
 
-static void bt_print_lvl(btree *node, int level)
+static void bt_print_lvl(btree *node, int level, void (*callback)(btree *node))
 {
     if (node == NULL)
         return;
 
     if (level == 1)
-        printf("%d ", node->value);
+    {
+        callback(node);
+        return;
+    }
 
-    bt_print_lvl(node->left, level - 1);
-    bt_print_lvl(node->right, level - 1);
+    bt_print_lvl(node->left, level - 1, callback);
+    bt_print_lvl(node->right, level - 1, callback);
 }
 
-void bt_lvl_order_traverse(btree *node)
+// static void print_node_value(btree *node) {
+//     printf("%d ", node->value);
+// }
+
+void bt_lvl_order_traverse(btree *node, void (*callback)(btree *node))
 {
     int height;
 
@@ -123,8 +130,6 @@ void bt_lvl_order_traverse(btree *node)
 
     for (int i = 1; i <= height; i++)
     {
-        printf("Level %d => ", i);
-        bt_print_lvl(node, i);
-        printf("\n");
+        bt_print_lvl(node, i, callback);
     }
 }
