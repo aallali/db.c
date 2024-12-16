@@ -6,46 +6,49 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/16 13:06:41 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/16 14:58:40 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "btree.h"
+#include "string.h"
 
 void print_n_tabs(int n)
 {
     for (int i = 0; i < n; i++)
-        printf("       ");
+        printf("    ");
 }
 
-static void print_tree_recursive(btree *node, int level)
+static void print_tree_recursive(char *prefix, btree *node, bool is_left)
 {
     if (node == NULL)
-    {
-        print_n_tabs(level);
-        printf("---<empty>---\n");
         return;
-    }
 
-    print_n_tabs(level);
-    printf("value: [%d]\n", node->value);
+    printf("%s", prefix);
+    printf("%s", is_left == true ? "├──────" : "└──────");
+    printf("%d\n", node->value);
 
-    print_n_tabs(level);
-    printf("left:\n");
-    print_tree_recursive(node->left, level + 1);
+    char *new_prefix = malloc(strlen(prefix) + 9 + 1);
+    
+    strcpy(new_prefix, prefix);
+    strcat(new_prefix, is_left ? "│      " : "       ");
 
-    print_n_tabs(level);
-    printf("right:\n");
-    print_tree_recursive(node->right, level + 1);
+    print_tree_recursive(new_prefix, node->left, true);
+    print_tree_recursive(new_prefix, node->right, false);
+
+    free(new_prefix);
     return;
 }
 
 void print_tree(btree *node)
 {
+    printf("\n");
     if (node != NULL)
-        print_tree_recursive(node, 0);
+        print_tree_recursive("", node, false);
     else
         printf("[DEBUG] This Node is EMPTY\n");
+
+    printf("\n");
 }
 
 btree *bt_create_tree(int value)
