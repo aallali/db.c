@@ -7,3 +7,10 @@ I aim to implement a basic non-relational database, starting with an in-memory a
 I previously started a similar project ([safinaDB](https://github.com/aallali/safinaDB)) in Rust. 
 However, I realized that I lacked understanding of kernel-level execution and database internals, 
 so I decided to go back and build things brick by brick.
+
+### Build and Execution Commands:
+- **`make`**: Compiles the source code.
+- **`db.bin`**: The compiled executable binary.
+- **`make run`**: Run the compiled executable binary.
+- **`make leak`**: Runs the binary with `valgrind` to check for memory leaks.
+- **`make clean`**: Removes all generated build files and binaries.
