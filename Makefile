@@ -6,7 +6,7 @@
 #    By: aallali <hi@allali.me>                   ██  █████  █████    _██      #
 #                                                 ██ _____█ _____█   _██       #
 #    Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma     #
-#    Updated: 2024/12/16 13:00:04 by aallali      -------- 1337.ma -------     #
+#    Updated: 2024/12/16 15:58:51 by aallali      -------- 1337.ma -------     #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ TARGET_TEST = ./build/test.bin
 all: $(TARGET)
 $(TARGET): $(OBJS) $(MAIN:.c=.o)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(MAIN:.c=.o)
+
+run: $(TARGET)
 	./$(TARGET)
 
 cleanObjects:
