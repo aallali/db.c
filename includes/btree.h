@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/16 04:00:13 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/16 12:24:20 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ int bt_calculate_height(btree *node);
 void bt_lvl_order_traverse(btree *node, void (*callback)(btree *node));
 
 void bt_delete_node(btree **node, int target);
+
+void bt_free_tree(btree **node);
 
 #endif // BTREE_H

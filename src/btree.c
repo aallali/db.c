@@ -179,4 +179,5 @@ void bt_delete_node(btree **head_node, int target)
         return bt_delete_node(&(*head_node)->left, target);
 
     return;
+    *node = NULL;
 }
