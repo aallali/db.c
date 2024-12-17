@@ -38,6 +38,8 @@ int bt_calculate_height(btree *node);
 
 void bt_lvl_order_traverse(btree *node, void (*callback)(btree *node));
 
+void bt_in_order_traversal(btree *node, void (*callback)(btree *node));
+
 void bt_delete_node(btree **node, int target);
 
 void bt_free_tree(btree **node);
