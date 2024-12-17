@@ -29,7 +29,7 @@ static void print_tree_recursive(char *prefix, btree *node, bool is_left)
     printf("%d\n", node->value);
 
     char *new_prefix = malloc(strlen(prefix) + 9 + 1);
-    
+
     strcpy(new_prefix, prefix);
     strcat(new_prefix, is_left ? "│      " : "       ");
 
@@ -85,7 +85,7 @@ bool bt_insert_node(btree **node_ptr, int value)
     }
 
     if (value > (*node_ptr)->value)
-        return bt_insert_node(&(*(node_ptr))->right, value);
+        return bt_insert_node(&(*node_ptr)->right, value);
 
     if (value < (*node_ptr)->value)
         return bt_insert_node(&(*(node_ptr))->left, value);
