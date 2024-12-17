@@ -6,7 +6,7 @@
 /*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
 /*                                                ██ _____█ _____█   _██      */
 /*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/16 14:58:40 by aallali      -------- 1337.ma -------    */
+/*   Updated: 2024/12/17 16:50:58 by aallali      -------- 1337.ma -------    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,45 @@ void bt_in_order_traversal(btree *node, void (*callback)(btree *node))
     bt_in_order_traversal(node->left, callback);
     callback(node);
     bt_in_order_traversal(node->right, callback);
+}
+
+void bt_find_predecessor_successor(
+    btree *node, int target, btree **predecessor, btree **successor)
+{
+    if (node == NULL)
+        return;
+
+    if (node->value == target)
+    {
+        if (node->left != NULL)
+        {
+            btree *tmp = node->left;
+            while (tmp->right != NULL)
+                tmp = tmp->right;
+            *predecessor = tmp;
+        }
+        if (node->right != NULL)
+        {
+            btree *tmp = node->right;
+            while (tmp->left != NULL)
+                tmp = tmp->left;
+            *successor = tmp;
+        }
+        return;
+    }
+
+    if (node->value > target)
+    {
+        *successor = node;
+        bt_find_predecessor_successor(
+            node->left, target, predecessor, successor);
+    }
+    else
+    {
+        *predecessor = node;
+        bt_find_predecessor_successor(
+            node->right, target, predecessor, successor);
+    }
 }
 
 static btree *bt_temp_delete_node_check(btree *node)
