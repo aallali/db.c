@@ -188,7 +188,7 @@ void bt_delete_node(btree **head_node, int target)
 
 void bt_free_tree(btree **node)
 {
-    if (*node == NULL)
+    if (node == NULL || *node == NULL)
     {
         return;
     }
