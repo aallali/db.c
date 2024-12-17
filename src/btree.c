@@ -134,6 +134,16 @@ void bt_lvl_order_traverse(btree *node, void (*callback)(btree *node))
     }
 }
 
+void bt_in_order_traversal(btree *node, void (*callback)(btree *node))
+{
+    if (node == NULL)
+        return;
+
+    bt_in_order_traversal(node->left, callback);
+    callback(node);
+    bt_in_order_traversal(node->right, callback);
+}
+
 static btree *bt_temp_delete_node_check(btree *node)
 {
     if (node->left != NULL && node->right != NULL)
