@@ -32,7 +32,7 @@ btree *bt_create_tree(int value);
 
 btree *bt_find(int target, btree *startNode);
 
-bool  bt_insert_node(btree **nodePtr, int v);
+bool bt_insert_node(btree **nodePtr, int v);
 
 int bt_calculate_height(btree *node);
 
