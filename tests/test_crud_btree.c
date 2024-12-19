@@ -1,13 +1,12 @@
 /* ************************************************************************** */
+/*   Copyright 2024 <Abdellah ALLALI>                                         */
 /*                                                                            */
-/*                                                __ ______ ______ _______    */
-/*   test_crud_btree.c                           _██ ██████ ██████ ███████    */
-/*                                               ███  ____█  ____█     _██    */
-/*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
-/*                                                ██ _____█ _____█   _██      */
-/*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/16 14:14:22 by aallali      -------- 1337.ma -------    */
+/*   File    : test_crud_btree.c                                              */
+/*   Project : DB.c                                                           */
+/*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
+/*   Created: 2024/12/13 13:37:42 by Abdellah A.                              */
+/*   Updated: 2024/12/19 15:09:55 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #include "test.h"
@@ -117,11 +116,31 @@ TEST_CASE(test_bt_delete_node_2children)
     */
     temp_counter = 0;
     bt_lvl_order_traverse(node, count_nodes);
-    TEST_EQUAL(temp_counter, 5); 
-
-    bt_delete_node(&node, 5); // Should not be deleted because it sitll have 2 childrens;
-
+    TEST_EQUAL(temp_counter, 5);
+    TEST_EQUAL(node->value, 7);
+    bt_delete_node(&node, 7);
+    /*
+            6
+          /   \
+         5     12
+        /
+       3
+    */
     temp_counter = 0;
     bt_lvl_order_traverse(node, count_nodes);
-    TEST_EQUAL(temp_counter, 5);
+    TEST_EQUAL(temp_counter, 4);
+    TEST_EQUAL(node->value, 6);
+    bt_delete_node(&node, 6);
+
+    TEST_EQUAL(node->value, 5);
+    TEST_EQUAL(node->right->value, 12);
+    TEST_EQUAL(node->left->value, 3);
+    
+    temp_counter = 0;
+    bt_lvl_order_traverse(node, count_nodes);
+    TEST_EQUAL(temp_counter, 3);
+    bt_delete_node(&node, 3);
+    bt_delete_node(&node, 12);
+    bt_delete_node(&node, 5);
+    TEST_EQUAL(node, NULL);
 }
