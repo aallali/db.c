@@ -1,13 +1,12 @@
 # **************************************************************************** #
+#    Copyright 2024 <Abdellah ALLALI>                                          #
 #                                                                              #
-#                                                 __ ______ ______ _______     #
-#    Makefile                                    _██ ██████ ██████ ███████     #
-#                                                ███  ____█  ____█     _██     #
-#    By: aallali <hi@allali.me>                   ██  █████  █████    _██      #
-#                                                 ██ _____█ _____█   _██       #
-#    Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma     #
-#    Updated: 2024/12/16 15:58:51 by aallali      -------- 1337.ma -------     #
+#    File    : Makefile                                                        #
+#    Project : DB.c                                                            #
+#    License : Apache 2.0 with Commons Clause. See LICENSE file.               #
 #                                                                              #
+#    Created: 2024/12/13 13:37:42 by Abdellah A.                               #
+#    Updated: 2024/12/19 15:22:58 by Abdellah A.                               #
 # **************************************************************************** #
 
 # Compiler and flags
@@ -25,11 +24,11 @@ TEST_SRCS = $(wildcard tests/test_*.c)
 TARGET = db.bin
 TARGET_TEST = ./build/test.bin
 
-
 # Build target
 all: $(TARGET)
 $(TARGET): $(OBJS) $(MAIN:.c=.o)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(MAIN:.c=.o)
+	@rm -f $(OBJS) src/main.o
 
 run: $(TARGET)
 	./$(TARGET)
@@ -39,7 +38,7 @@ cleanObjects:
 	
 test: $(OBJS)
 	@mkdir -p build     
-	@$(CC) $(CFLAGS) $(TEST_SRCS) $(OBJS) -o $(TARGET_TEST) $(TFLAGS)
+	$(CC) $(CFLAGS) $(TEST_SRCS) $(OBJS) -o $(TARGET_TEST) $(TFLAGS)
 	@rm src/*.o
 	@$(TARGET_TEST) --unittest
 
@@ -50,4 +49,3 @@ clean:
 	rm -f $(OBJS) $(TARGET) src/main.o
 	rm -rf build
 
-.PHONY: all clean test
