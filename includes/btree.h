@@ -1,13 +1,12 @@
 /* ************************************************************************** */
+/*   Copyright 2024 <Abdellah ALLALI>                                         */
 /*                                                                            */
-/*                                                __ ______ ______ _______    */
-/*   btree.h                                     _██ ██████ ██████ ███████    */
-/*                                               ███  ____█  ____█     _██    */
-/*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
-/*                                                ██ _____█ _____█   _██      */
-/*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/17 16:37:08 by aallali      -------- 1337.ma -------    */
+/*   File    : btree.h                                                        */
+/*   Project : DB.c                                                           */
+/*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
+/*   Created: 2024/12/13 13:37:42 by Abdellah A.                              */
+/*   Updated: 2024/12/19 15:09:16 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #ifndef BTREE_H
@@ -43,7 +42,7 @@ void bt_in_order_traversal(btree *node, void (*callback)(btree *node));
 void bt_find_predecessor_successor(
     btree *node, int target, btree **predecessor, btree **successor);
 
-void bt_delete_node(btree **node, int target);
+btree *bt_delete_node(btree **node, int target);
 
 void bt_free_tree(btree **node);
 

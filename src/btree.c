@@ -1,13 +1,12 @@
 /* ************************************************************************** */
+/*   Copyright 2024 <Abdellah ALLALI>                                         */
 /*                                                                            */
-/*                                                __ ______ ______ _______    */
-/*   btree.c                                     _██ ██████ ██████ ███████    */
-/*                                               ███  ____█  ____█     _██    */
-/*   By: aallali <hi@allali.me>                   ██  █████  █████    _██     */
-/*                                                ██ _____█ _____█   _██      */
-/*   Created: 2024/12/13 13:37:42 by aallali      ██ ██████ ██████   ██.ma    */
-/*   Updated: 2024/12/17 16:50:58 by aallali      -------- 1337.ma -------    */
+/*   File    : btree.c                                                        */
+/*   Project : DB.c                                                           */
+/*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
+/*   Created: 2024/12/13 13:37:42 by Abdellah A.                              */
+/*   Updated: 2024/12/19 15:08:38 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #include "btree.h"
@@ -183,56 +182,51 @@ void bt_find_predecessor_successor(
     }
 }
 
-static btree *bt_temp_delete_node_check(btree *node)
+btree *bt_delete_node(btree **root, int target)
 {
-    if (node->left != NULL && node->right != NULL)
+
+    if (*root == NULL)
+        return *root;
+
+    if ((*root)->value < target)
+        return bt_delete_node(&(*root)->right, target);
+    else if ((*root)->value > target)
+        return bt_delete_node(&(*root)->left, target);
+    else
     {
-        printf("[WARNING] Two-child deletion not yet implemented\n");
-        return node;
+
+        // Case 1: no child
+        if ((*root)->right == NULL && (*root)->left == NULL)
+        {
+            free(*root);
+            *root = NULL;
+        }
+        // Case 2: one
+        else if ((*root)->left == NULL)
+        {
+            btree *tmp = *root;
+            *root = (*root)->right;
+            free(tmp);
+        }
+        else if ((*root)->right == NULL)
+        {
+            btree *tmp = *root;
+            *root = (*root)->left;
+            free(tmp);
+        }
+        // Case 3: both childs exists
+        else
+        {
+            btree *proc = NULL;
+            btree *suc = NULL;
+
+            bt_find_predecessor_successor(*root, target, &proc, &suc);
+
+            (*root)->value = proc->value;
+            bt_delete_node(&(*root)->left, proc->value);
+        }
     }
-    if (node->left != NULL)
-    {
-        btree *temp_node = node->left;
-        free(node);
-        node = NULL;
-
-        return temp_node;
-    }
-    if (node->right != NULL)
-    {
-        btree *temp_node = node->right;
-        free(node);
-        node = NULL;
-        return temp_node;
-    }
-    bt_free_tree(&node);
-    return NULL;
-}
-
-void bt_delete_node(btree **head_node, int target)
-{
-    if (head_node == NULL)
-        return;
-
-    if ((*head_node)->right != NULL && (*head_node)->right->value == target)
-    {
-        (*head_node)->right = bt_temp_delete_node_check((*head_node)->right);
-        return;
-    }
-    if ((*head_node)->left != NULL && (*head_node)->left->value == target)
-    {
-        (*head_node)->left = bt_temp_delete_node_check((*head_node)->left);
-        return;
-    }
-
-    if ((*head_node)->value < target)
-        return bt_delete_node(&(*head_node)->right, target);
-
-    if ((*head_node)->value > target)
-        return bt_delete_node(&(*head_node)->left, target);
-
-    (*head_node) = bt_temp_delete_node_check((*head_node));
-    return;
+    return *root;
 }
 
 void bt_free_tree(btree **node)
