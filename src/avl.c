@@ -33,6 +33,17 @@ AVL_NODE *avl_create_node(int value)
     return node;
 }
 
+void avl_free_tree(AVL_NODE *node)
+{
+    if (node == NULL)
+        return;
+
+    avl_free_tree(node->right);
+    avl_free_tree(node->left);
+    free(node);
+    node = NULL;
+}
+
 /*
  * Example of an AVL Tree Node:
  *
@@ -59,4 +70,8 @@ void avl_main_test()
     node->left->right = avl_create_node(15);
 
     avl_print_tree(node);
+    /*
+    Free My Homie (AVL lives matter)
+    */
+    avl_free_tree(node);
 }
