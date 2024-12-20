@@ -25,6 +25,8 @@ typedef struct AVL_NODE
 
 AVL_NODE *avl_create_node(int value);
 
+void avl_free_tree(AVL_NODE *node);
+
 void avl_main_test();
 
 #endif // AVL_H
