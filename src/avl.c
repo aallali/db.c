@@ -33,6 +33,28 @@ AVL_NODE *avl_create_node(int value)
     return node;
 }
 
+AVL_NODE *avl_insert_node(AVL_NODE **root, int value)
+{
+    if (*root == NULL)
+    {
+        *root = avl_create_node(value);
+        return *root;
+    }
+    if ((*root)->value < value)
+    {
+        return avl_insert_node(&(*root)->right, value);
+    }
+    else if ((*root)->value > value)
+    {
+        return avl_insert_node(&(*root)->left, value);
+    }
+    else
+    {
+        // Duplicate values not allowed in AVL tree.
+        return *root;
+    }
+}
+
 void avl_free_tree(AVL_NODE *node)
 {
     if (node == NULL)
@@ -69,6 +91,11 @@ void avl_main_test()
     node->left->left = avl_create_node(5);
     node->left->right = avl_create_node(15);
 
+    avl_insert_node(&node, 1);
+    avl_insert_node(&node, 2);
+    avl_insert_node(&node, 3);
+    avl_insert_node(&node, 3);
+    avl_insert_node(&node, 4);
     avl_print_tree(node);
     /*
     Free My Homie (AVL lives matter)
