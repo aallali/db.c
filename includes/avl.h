@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/20 12:55:28 by Abdellah A.                              */
-/*   Updated: 2024/12/21 00:23:12 by Abdellah A.                              */
+/*   Updated: 2024/12/21 00:24:16 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #ifndef AVL_H
@@ -26,6 +26,8 @@ typedef struct AVL_NODE
 AVL_NODE *avl_create_node(int value);
 
 AVL_NODE *avl_insert_node(AVL_NODE **root, int value);
+
+int avl_height(AVL_NODE *node);
 
 void avl_free_tree(AVL_NODE *node);
 

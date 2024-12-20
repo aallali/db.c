@@ -55,6 +55,20 @@ AVL_NODE *avl_insert_node(AVL_NODE **root, int value)
     }
 }
 
+int avl_height(AVL_NODE *node)
+{
+    if (node == NULL)
+        return 0;
+
+    int left_h = avl_height(node->left);
+    int right_h = avl_height(node->right);
+
+    if (left_h > right_h)
+        return left_h + 1;
+    else
+        return right_h + 1;
+}
+
 void avl_free_tree(AVL_NODE *node)
 {
     if (node == NULL)
@@ -96,6 +110,8 @@ void avl_main_test()
     avl_insert_node(&node, 3);
     avl_insert_node(&node, 3);
     avl_insert_node(&node, 4);
+
+    printf("Height of AVL tree is : %d", avl_height(node));
     avl_print_tree(node);
     /*
     Free My Homie (AVL lives matter)
