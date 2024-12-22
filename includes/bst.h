@@ -23,9 +23,8 @@ typedef struct BST_NODE
     struct BST_NODE *right;
 } BST_NODE;
 
-void print_n_tabs(int n);
 
-void print_tree(BST_NODE *node);
+void bst_print_tree(BST_NODE *node);
 
 BST_NODE *bst_create_tree(int value);
 
