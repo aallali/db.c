@@ -80,6 +80,37 @@ void avl_free_tree(AVL_NODE *node)
     node = NULL;
 }
 
+AVL_NODE *avl_rotation_right(AVL_NODE *y)
+{
+    /*
+       y
+      / \
+     x   yr  (yr == y right)
+      \
+       z
+    rotated to
+       x
+      /
+     z
+      \
+       y
+    */
+    AVL_NODE *x = y->left;
+    AVL_NODE *z = x->right;
+
+    x->right = y;
+    y->left = z;
+
+    y->height = MAX(HEIGHT_OR_ZERO(y->left),
+                    HEIGHT_OR_ZERO(y->right)) +
+                1;
+    x->height = MAX(HEIGHT_OR_ZERO(x->left),
+                    HEIGHT_OR_ZERO(x->right)) +
+                1;
+
+    return x;
+}
+
  ************************************************************
  *****************  AVL Print Tree Helpers  *****************
  ************************************************************
