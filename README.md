@@ -15,7 +15,7 @@ so I decided to go back and build things brick by brick.
 - **`make leak`**: Runs the binary with `valgrind` to check for memory leaks.
 - **`make clean`**: Removes all generated build files and binaries.
 
-### **Checklist for Learning Database Internals**
+### **Checklist for Learnings:**
 <details>
 <summary><b>Step 1: Deepen Understanding of Binary Search Trees (BST)</b></summary>
 
@@ -34,5 +34,14 @@ so I decided to go back and build things brick by brick.
 </details>
 <details>
 <summary><b>Step 2: Move to Balanced Trees</b></summary>
-...
+
+- [ ] Learn and implement **AVL Trees**:
+  - [ ] Add necessary methods (delete, traverse, find)
+  - [x] Add rotations (left, right, left-right, right-left).
+  - [ ] Maintain height balancing after insertion/deletion.
+- [ ] Implement a **Red-Black Tree**:
+  - [ ] Add node coloring (red or black).
+  - [ ] Maintain balance after insertion/deletion.
+  - [ ] Handle edge cases like double-red or double-black.
+
 </details>
