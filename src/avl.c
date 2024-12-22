@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/20 02:09:52 by Abdellah A.                              */
-/*   Updated: 2024/12/21 00:18:49 by Abdellah A.                              */
+/*   Updated: 2024/12/22 03:11:47 by Abdellah A.                              */
 /* ************************************************************************** */
 
 /*
@@ -19,6 +19,14 @@ An AVL tree defined as a self-balancing Binary Search Tree (BST) where the
 difference between heights of left and right subtrees for any node cannot be
 more than one.
 
+Example:
+Original Tree: 10->20->30->40->50->25
+AVL Tree:
+    30 (Height = 2)
+   /  \
+  20  40 (Height = 1)
+ /  \   \
+10  25  50
 */
 
 #include "avl.h"
@@ -28,31 +36,142 @@ AVL_NODE *avl_create_node(int value)
 {
     AVL_NODE *node = (AVL_NODE *)malloc(sizeof(AVL_NODE));
     node->value = value;
-    node->height = 0;
+    node->height = 1;
     node->left = node->right = NULL;
     return node;
 }
 
-AVL_NODE *avl_insert_node(AVL_NODE **root, int value)
+static void avl_update_height(AVL_NODE **node)
 {
-    if (*root == NULL)
+    (*node)->height = 1 + MAX(
+                              HEIGHT_OR_ZERO((*node)->right),
+                              HEIGHT_OR_ZERO((*node)->left));
+}
+/**
+ * @brief Inserts a node with the given value into the AVL tree.
+ *
+ * This function inserts a new node with the specified value into the AVL tree
+ * while maintaining the AVL tree property (balance factor of each node is -1,0, or 1).
+ * It performs necessary rotations to ensure the tree remains balanced after insertion.
+ *
+ * The rotations are as follows:
+ * 
+ * - Left Left Case: 
+ *      - A single right rotation is performed.
+ *      - e.g:
+ *   Insert 1 into the tree:
+ *           3
+ *          /
+ *         2
+ *        /
+ *       1
+ *   rotation:
+ *           2
+ *          / \
+ *         1   3
+ *
+ * - Right Right Case:
+ *      - A single left rotation is performed.
+ *      - e.g:
+ *   Insert 3 into the tree:
+ *       1
+ *        \
+ *         2
+ *          \
+ *           3
+ *   rotation:
+ *           2
+ *          / \
+ *         1   3
+ *
+ * - Left Right Case: 
+ *      - A left rotation is performed on the left child, 
+ *      - followed by a right rotation on the root.
+ *      - e.g:
+ *   Insert 2 into the tree:
+ *           3
+ *          /
+ *         1
+ *          \
+ *           2
+ *   rotation:
+ *           2
+ *          / \
+ *         1   3
+ *
+ * - Right Left Case: 
+ *      - A right rotation is performed on the right child, 
+ *      - followed by a left rotation on the root.
+ *      - e.g:
+ *       Insert 2 into the tree:
+ *       1
+ *        \
+ *         3
+ *        /
+ *       2
+ * After right rotation on right child:
+ *     1
+ *      \
+ *       2
+ *        \
+ *         3
+ * After left rotation on root:
+ *         2
+ *        / \
+ *       1   3
+ *
+ * @param root The root node of the AVL tree.
+ * @param value The value to be inserted into the AVL tree.
+ * @return AVL_NODE* The new root of the AVL tree after insertion.
+ */
+AVL_NODE *avl_insert_node(AVL_NODE *root, int value)
+{
+    if (root == NULL)
     {
-        *root = avl_create_node(value);
-        return *root;
+        root = avl_create_node(value);
+        return root;
     }
-    if ((*root)->value < value)
+    if (value < (root)->value)
     {
-        return avl_insert_node(&(*root)->right, value);
+        root->left = avl_insert_node((root)->left, value);
     }
-    else if ((*root)->value > value)
+    else if (value > (root)->value)
     {
-        return avl_insert_node(&(*root)->left, value);
+        root->right = avl_insert_node((root)->right, value);
     }
     else
     {
         // Duplicate values not allowed in AVL tree.
-        return *root;
+        return root;
     }
+
+    avl_update_height(&root);
+    int balance = avl_get_balance(root);
+
+    // Left Left Case
+    if (balance > 1 && value < (root)->left->value)
+        return avl_rotation_right(root);
+
+    // Right Right Case
+    if (balance < -1 && value > (root)->right->value)
+        return avl_rotation_left(root);
+
+    // Left Right Case
+    if (balance > 1 && value > (root)->left->value)
+    {
+        (root)->left = avl_rotation_left((root)->left);
+        return avl_rotation_right(root);
+    }
+
+    // Right Left Case
+    if (balance < -1 && value < (root)->right->value)
+    {
+        (root)->right = avl_rotation_right((root)->right);
+        return avl_rotation_left(root);
+    }
+    return root;
+}
+
 int avl_get_balance(AVL_NODE *node)
 {
     if (node == NULL)
@@ -187,36 +306,25 @@ void avl_print_tree(AVL_NODE *node)
 /*
  * Example of an AVL Tree Node:
  *
- *         20 (Height = 2)
+ *         30 (Height = 2)
  *        /  \
- *       10  30 (Height = 1)
- *      /  \
- *     5   15
- *
- * Key Details:
- * - Node "20" is the root with height 2.
- * - Node "10" has a height of 1 and is balanced.
- * - Node "30" is a leaf node with height 1.
- * - Left subtree: 10 → 5, 15 (balanced).
- * - Right subtree: 30 (no children).
+ *       20  40 (Height = 1)
+ *      /  \   \
+ *     10  25  50
  */
 
 void avl_main_test()
 {
-    AVL_NODE *node = avl_create_node(20);
-    node->right = avl_create_node(30);
-    node->left = avl_create_node(10);
-    node->left->left = avl_create_node(5);
-    node->left->right = avl_create_node(15);
-
-    avl_insert_node(&node, 1);
-    avl_insert_node(&node, 2);
-    avl_insert_node(&node, 3);
-    avl_insert_node(&node, 3);
-    avl_insert_node(&node, 4);
+    AVL_NODE *node = avl_create_node(10);
+    node = avl_insert_node(node, 20);
+    node = avl_insert_node(node, 30);
+    node = avl_insert_node(node, 40);
+    node = avl_insert_node(node, 50);
+    node = avl_insert_node(node, 25);
 
     printf("Height of AVL tree is : %d", avl_height(node));
     avl_print_tree(node);
+
     /*
     Free My Homie (AVL lives matter)
     */
