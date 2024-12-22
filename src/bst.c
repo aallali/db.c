@@ -203,6 +203,40 @@ void bst_free_tree(BST_NODE **node)
     *node = NULL;
 }
 
+/*
+ ************************************************************
+ *****************  BST Print Tree Helpers  *****************
+ ************************************************************
+ */
+void *bst_get_child(void *node, bool is_left)
+{
+    return is_left ? ((BST_NODE *)node)->left : ((BST_NODE *)node)->right;
+}
+
+char *bst_get_value(void *node)
+{
+    char *result = malloc(3);
+    if (result != NULL)
+    {
+        snprintf(result, 3, "%d", ((BST_NODE *)node)->value);
+    }
+    return result;
+}
+
+node_handler bst_handler = {
+    .get_child = bst_get_child,
+    .get_value = bst_get_value};
+
+void bst_print_tree(BST_NODE *node)
+{
+    printf("\n");
+    if (node != NULL)
+        print_tree_recursive("", node, false, &bst_handler);
+    else
+        printf("[DEBUG] This BST Node is EMPTY\n");
+    printf("\n");
+}
+
 void print_node_value(BST_NODE *node)
 {
     printf("[%d] ", node->value);
