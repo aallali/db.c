@@ -6,18 +6,37 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/13 13:37:42 by Abdellah A.                              */
-/*   Updated: 2024/12/22 03:20:41 by Abdellah A.                              */
+/*   Updated: 2024/12/22 18:26:57 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #include "test.h"
 #include "bst.h"
 
 static int temp_counter = 0;
+static char *temp_str = NULL;
 
 static void count_nodes(BST_NODE *node)
 {
     (void)node;
     temp_counter++;
+}
+
+static void print_bst_node_value(BST_NODE *node)
+{
+    // concat node values into temp_str
+    if (temp_str == NULL)
+    {
+        temp_str = malloc(5);
+        snprintf(temp_str, 5, "%d", node->value);
+    }
+    else
+    {
+        size_t len = strlen(temp_str) + 5;
+        char *tmp = malloc(len);
+        snprintf(tmp, len, "%s %d", temp_str, node->value);
+        free(temp_str);
+        temp_str = tmp;
+    }
 }
 
 TEST_CASE(test_bst_create_tree)
@@ -79,6 +98,25 @@ TEST_CASE(test_bst_lvl_order_traverse)
     TEST_EQUAL(temp_counter, height);
     bst_free_tree(&node);
 }
+
+TEST_CASE(test_bst_lvl_order_traverse_print)
+{
+    BST_NODE *node = NULL;
+
+    bst_insert_node(&node, 50);
+    bst_insert_node(&node, 30);
+    bst_insert_node(&node, 60);
+    bst_insert_node(&node, 40);
+    bst_insert_node(&node, 70);
+
+    bst_lvl_order_traverse(node, print_bst_node_value);
+    TEST_STREQUAL(temp_str, "50 30 60 40 70");
+
+    free(temp_str);
+    temp_str = NULL;
+    bst_free_tree(&node);
+}
+
 }
 
 TEST_CASE(test_bst_delete_node)
