@@ -53,6 +53,11 @@ AVL_NODE *avl_insert_node(AVL_NODE **root, int value)
         // Duplicate values not allowed in AVL tree.
         return *root;
     }
+int avl_get_balance(AVL_NODE *node)
+{
+    if (node == NULL)
+        return 0;
+    return HEIGHT_OR_ZERO(node->left) - HEIGHT_OR_ZERO(node->right);
 }
 
 int avl_height(AVL_NODE *node)

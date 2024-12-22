@@ -35,6 +35,8 @@ AVL_NODE *avl_rotation_right(AVL_NODE *y);
 
 int avl_height(AVL_NODE *node);
 
+int avl_get_balance(AVL_NODE *node);
+
 void avl_free_tree(AVL_NODE *node);
 
 void avl_main_test();
