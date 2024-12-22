@@ -15,6 +15,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define HEIGHT_OR_ZERO(a) ((a) != NULL ? (a->height) : (0))
+
 typedef struct AVL_NODE
 {
     int value;
@@ -26,6 +29,7 @@ typedef struct AVL_NODE
 AVL_NODE *avl_create_node(int value);
 
 AVL_NODE *avl_insert_node(AVL_NODE **root, int value);
+AVL_NODE *avl_rotation_right(AVL_NODE *y);
 
 int avl_height(AVL_NODE *node);
 
