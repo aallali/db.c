@@ -26,6 +26,7 @@ TEST_CASE(test_bst_create_tree)
     TEST_EQUAL(root_node->value, 10);
     TEST_EQUAL(root_node->left, NULL);
     TEST_EQUAL(root_node->right, NULL);
+    bst_free_tree(&root_node);
 }
 
 TEST_CASE(test_bst_insert_node)
@@ -36,6 +37,7 @@ TEST_CASE(test_bst_insert_node)
     TEST_EQUAL(root_node->value, 10);
     TEST_EQUAL(root_node->left->value, 1);
     TEST_EQUAL(root_node->right->value, 11);
+    bst_free_tree(&root_node);
 }
 
 TEST_CASE(test_bst_calculate_height)
@@ -47,6 +49,7 @@ TEST_CASE(test_bst_calculate_height)
         bst_insert_node(&node, i);
 
     TEST_EQUAL(bst_calculate_height(node), height);
+    bst_free_tree(&node);
 }
 
 TEST_CASE(test_bst_find)
@@ -60,6 +63,7 @@ TEST_CASE(test_bst_find)
     TEST_EQUAL(bst_find(height - 1, node)->value, height - 1);
     TEST_EQUAL(bst_find(0, node)->value, 0);
     TEST_EQUAL(bst_find(height, node), NULL);
+    bst_free_tree(&node);
 }
 
 TEST_CASE(test_bst_lvl_order_traverse)
@@ -73,6 +77,8 @@ TEST_CASE(test_bst_lvl_order_traverse)
 
     bst_lvl_order_traverse(node, count_nodes);
     TEST_EQUAL(temp_counter, height);
+    bst_free_tree(&node);
+}
 }
 
 TEST_CASE(test_bst_delete_node)
@@ -93,6 +99,7 @@ TEST_CASE(test_bst_delete_node)
     temp_counter = 0;
     bst_lvl_order_traverse(node, count_nodes);
     TEST_EQUAL(temp_counter, height - 2);
+    bst_free_tree(&node);
 }
 
 TEST_CASE(test_bst_delete_node_2children)
@@ -138,4 +145,5 @@ TEST_CASE(test_bst_delete_node_2children)
     bst_delete_node(&node, 12);
     bst_delete_node(&node, 5);
     TEST_EQUAL(node, NULL);
+    bst_free_tree(&node);
 }
