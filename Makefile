@@ -31,7 +31,7 @@ $(TARGET): $(OBJS) $(MAIN:.c=.o)
 	@rm -f $(OBJS) src/main.o
 
 run: $(TARGET)
-	./$(TARGET)
+	./$(TARGET) $(ARGS)
 
 cleanObjects:
 	rm -f $(OBJS)
@@ -43,7 +43,7 @@ test: $(OBJS)
 	@$(TARGET_TEST) --unittest
 
 leak: $(TARGET)
-	valgrind $(VALGRING_FLAGS) ./$(TARGET)
+	valgrind $(VALGRING_FLAGS) ./$(TARGET) $(ARGS)
 
 clean:
 	rm -f $(OBJS) $(TARGET) src/main.o
