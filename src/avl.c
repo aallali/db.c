@@ -111,6 +111,39 @@ AVL_NODE *avl_rotation_right(AVL_NODE *y)
     return x;
 }
 
+AVL_NODE *avl_rotation_left(AVL_NODE *x)
+{
+    /*
+       x
+        \
+         y
+        /
+       z
+    rotated to
+       y
+        \
+         z
+        /
+       x
+    */
+    AVL_NODE *y = x->right;
+    AVL_NODE *z = y->left;
+
+    // Perform rotation
+    y->left = x;
+    x->right = z;
+
+    y->height = MAX(HEIGHT_OR_ZERO(y->left),
+                    HEIGHT_OR_ZERO(y->right)) +
+                1;
+    x->height = MAX(HEIGHT_OR_ZERO(x->left),
+                    HEIGHT_OR_ZERO(x->right)) +
+                1;
+
+    return y;
+}
+
+/*
  ************************************************************
  *****************  AVL Print Tree Helpers  *****************
  ************************************************************

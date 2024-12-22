@@ -29,6 +29,8 @@ typedef struct AVL_NODE
 AVL_NODE *avl_create_node(int value);
 
 AVL_NODE *avl_insert_node(AVL_NODE **root, int value);
+AVL_NODE *avl_rotation_left(AVL_NODE *x);
+
 AVL_NODE *avl_rotation_right(AVL_NODE *y);
 
 int avl_height(AVL_NODE *node);
