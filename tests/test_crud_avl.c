@@ -20,3 +20,51 @@ TEST_CASE(test_avl_create_tree)
     TEST_EQUAL(root_node->right, NULL);
 }
 
+TEST_CASE(test_avl_insert_node)
+{
+    AVL_NODE *root_node = avl_create_node(10);
+    root_node = avl_insert_node(root_node, 1);
+    root_node = avl_insert_node(root_node, 11);
+    TEST_EQUAL(root_node->value, 10);
+    TEST_EQUAL(root_node->left->value, 1);
+    TEST_EQUAL(root_node->right->value, 11);
+}
+
+TEST_CASE(test_avl_insert_node_2)
+{
+    AVL_NODE *root_node = avl_create_node(10);
+    root_node = avl_insert_node(root_node, 20);
+    root_node = avl_insert_node(root_node, 30);
+    root_node = avl_insert_node(root_node, 40);
+    root_node = avl_insert_node(root_node, 50);
+    root_node = avl_insert_node(root_node, 25);
+    TEST_EQUAL(root_node->value, 30);
+    TEST_EQUAL(root_node->left->value, 20);
+    TEST_EQUAL(root_node->right->value, 40);
+    TEST_EQUAL(root_node->left->left->value, 10);
+    TEST_EQUAL(root_node->left->right->value, 25);
+    TEST_EQUAL(root_node->right->right->value, 50);
+}
+
+TEST_CASE(test_avl_insert_node_3)
+{
+    AVL_NODE *root_node = avl_create_node(10);
+    root_node = avl_insert_node(root_node, 20);
+    root_node = avl_insert_node(root_node, 30);
+    root_node = avl_insert_node(root_node, 40);
+    root_node = avl_insert_node(root_node, 50);
+    root_node = avl_insert_node(root_node, 25);
+    root_node = avl_insert_node(root_node, 35);
+    root_node = avl_insert_node(root_node, 45);
+    root_node = avl_insert_node(root_node, 55);
+    TEST_EQUAL(root_node->value, 30);
+    TEST_EQUAL(root_node->left->value, 20);
+    TEST_EQUAL(root_node->right->value, 40);
+    TEST_EQUAL(root_node->left->left->value, 10);
+    TEST_EQUAL(root_node->left->right->value, 25);
+    TEST_EQUAL(root_node->right->right->value, 50);
+    TEST_EQUAL(root_node->right->left->value, 35);
+    TEST_EQUAL(root_node->right->right->right->value, 55);
+    TEST_EQUAL(root_node->right->right->left->value, 45);
+}
+
