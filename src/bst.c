@@ -191,16 +191,13 @@ BST_NODE *bst_delete_node(BST_NODE **root, int target)
     return *root;
 }
 
-void bst_free_tree(BST_NODE **node)
-{
-    if (node == NULL || *node == NULL)
-    {
-        return;
+void bst_free_tree(BST_NODE **node) {
+    if (*node != NULL) {
+        bst_free_tree(&(*node)->left);
+        bst_free_tree(&(*node)->right);
+        free(*node);
+        *node = NULL;
     }
-    bst_free_tree(&(*node)->right);
-    bst_free_tree(&(*node)->left);
-    free(*node);
-    *node = NULL;
 }
 
 /*
