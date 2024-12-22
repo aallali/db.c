@@ -80,6 +80,41 @@ void avl_free_tree(AVL_NODE *node)
     node = NULL;
 }
 
+ ************************************************************
+ *****************  AVL Print Tree Helpers  *****************
+ ************************************************************
+ */
+void *avl_get_child(void *node, bool is_left)
+{
+    return is_left ? ((AVL_NODE *)node)->left : ((AVL_NODE *)node)->right;
+}
+
+char *avl_get_value(void *node)
+{
+    char *result = malloc(20); // Allocate enough space for the formatted string
+    if (result != NULL)
+    {
+        snprintf(result, 20, "%d.............h:%d",
+                 ((AVL_NODE *)node)->value,
+                 ((AVL_NODE *)node)->height);
+    }
+    return result;
+}
+
+node_handler avl_handler = {
+    .get_child = avl_get_child,
+    .get_value = avl_get_value};
+
+void avl_print_tree(AVL_NODE *node)
+{
+    printf("\n");
+    if (node != NULL)
+        print_tree_recursive("", node, false, &avl_handler);
+    else
+        printf("[DEBUG] This AVL Node is EMPTY\n");
+    printf("\n");
+}
+
 /*
  * Example of an AVL Tree Node:
  *
