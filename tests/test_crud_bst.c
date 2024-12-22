@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/13 13:37:42 by Abdellah A.                              */
-/*   Updated: 2024/12/21 00:08:33 by Abdellah A.                              */
+/*   Updated: 2024/12/22 03:20:41 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #include "test.h"
@@ -18,11 +18,6 @@ static void count_nodes(BST_NODE *node)
 {
     (void)node;
     temp_counter++;
-}
-
-int main()
-{
-    return 0;
 }
 
 TEST_CASE(test_bst_create_tree)
