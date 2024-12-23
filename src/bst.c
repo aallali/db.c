@@ -6,11 +6,12 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/13 13:37:42 by Abdellah A.                              */
-/*   Updated: 2024/12/21 00:07:43 by Abdellah A.                              */
+/*   Updated: 2024/12/23 03:01:39 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #include "bst.h"
 #include "helpers.h"
+#include "queue.h"
 
 BST_NODE *bst_create_tree(int value)
 {
@@ -93,6 +94,29 @@ void bst_lvl_order_traverse(BST_NODE *node, void (*callback)(BST_NODE *node))
     {
         bst_print_lvl(node, i, callback);
     }
+}
+
+void bst_lvl_order_traverse_queue(
+    BST_NODE *node, void (*callback)(BST_NODE *node))
+{
+    Queue *q;
+
+    q = create_queue();
+    enqueue(q, node);
+
+    while (q->front)
+    {
+        BST_NODE *current = q->front->node;
+        dequeue(q);
+        callback(current);
+        if (current->left != NULL)
+            enqueue(q, current->left);
+
+        if (current->right != NULL)
+            enqueue(q, current->right);
+    }
+
+    free(q);
 }
 
 void bst_in_order_traversal(BST_NODE *node, void (*callback)(BST_NODE *node))

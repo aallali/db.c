@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/13 13:37:42 by Abdellah A.                              */
-/*   Updated: 2024/12/21 00:06:49 by Abdellah A.                              */
+/*   Updated: 2024/12/23 03:07:09 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #ifndef BST_H
@@ -23,7 +23,6 @@ typedef struct BST_NODE
     struct BST_NODE *right;
 } BST_NODE;
 
-
 void bst_print_tree(BST_NODE *node);
 
 BST_NODE *bst_create_tree(int value);
@@ -34,9 +33,14 @@ bool bst_insert_node(BST_NODE **nodePtr, int v);
 
 int bst_calculate_height(BST_NODE *node);
 
-void bst_lvl_order_traverse(BST_NODE *node, void (*callback)(BST_NODE *node));
+void bst_lvl_order_traverse(
+    BST_NODE *node, void (*callback)(BST_NODE *node));
 
-void bst_in_order_traversal(BST_NODE *node, void (*callback)(BST_NODE *node));
+void bst_lvl_order_traverse_queue(
+    BST_NODE *node, void (*callback)(BST_NODE *node));
+
+void bst_in_order_traversal(
+    BST_NODE *node, void (*callback)(BST_NODE *node));
 
 void bst_find_predecessor_successor(
     BST_NODE *node, int target, BST_NODE **predecessor, BST_NODE **successor);
