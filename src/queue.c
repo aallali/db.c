@@ -6,23 +6,29 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/23 02:51:44 by Abdellah A.                              */
-/*   Updated: 2024/12/23 16:34:16 by Abdellah A.                              */
+/*   Updated: 2024/12/23 16:36:44 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #include <queue.h>
 
 QueueNode *create_queue_node(void *element)
 {
-    QueueNode *node = (QueueNode *)malloc(sizeof(QueueNode));
+    QueueNode *node;
+
+    node = (QueueNode *)malloc(sizeof(QueueNode));
     node->node = element;
     node->next = NULL;
+
     return node;
 }
 
-Queue *create_queue() {
-    Queue* q = (Queue*)malloc(sizeof(Queue));
+Queue *create_queue()
+{
+    Queue *q;
+
+    q = (Queue *)malloc(sizeof(Queue));
     q->front = q->rear = NULL;
-    
+
     return q;
 }
 
@@ -50,11 +56,14 @@ int queue_size(Queue *q)
 
 void enqueue(Queue *q, void *element)
 {
-    QueueNode *new_node = create_queue_node(element);
+    QueueNode *new_node;
+    
+    new_node = create_queue_node(element);
 
-    if (q->front == NULL)
+    if (queue_is_empty(q) == true)
     {
         q->front = q->rear = new_node;
+
         return;
     }
 
