@@ -26,6 +26,11 @@ Queue *create_queue() {
     return q;
 }
 
+bool queue_is_empty(Queue *q)
+{
+    return q->front == NULL;
+}
+
 int queue_size(Queue *q)
 {
     int size;
