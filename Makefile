@@ -6,13 +6,16 @@
 #    License : Apache 2.0 with Commons Clause. See LICENSE file.               #
 #                                                                              #
 #    Created: 2024/12/13 13:37:42 by Abdellah A.                               #
-#    Updated: 2024/12/19 15:22:58 by Abdellah A.                               #
+#    Updated: 2024/12/23 01:08:12 by Abdellah A.                               #
 # **************************************************************************** #
 
 # Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -Iincludes
-VALGRING_FLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes -s
+VALGRING_FLAGS = --leak-check=full \
+				 --show-leak-kinds=all \
+				 --track-origins=yes \
+				 -s
 TFLAGS = -DUNIT_TEST
 
 # Files and target
@@ -32,15 +35,18 @@ $(TARGET): $(OBJS) $(MAIN:.c=.o)
 
 run: $(TARGET)
 	./$(TARGET) $(ARGS)
-
-cleanObjects:
-	rm -f $(OBJS)
 	
 test: $(OBJS)
 	@mkdir -p build     
 	$(CC) $(CFLAGS) $(TEST_SRCS) $(OBJS) -o $(TARGET_TEST) $(TFLAGS)
 	@rm src/*.o
-	@$(TARGET_TEST) --unittest
+	valgrind $(VALGRING_FLAGS) $(TARGET_TEST) --unittest
+
+test-single: $(OBJS)
+	@mkdir -p build     
+	@$(CC) $(CFLAGS) tests/test_main.c $(FILE) $(OBJS) -o $(TARGET_TEST) $(TFLAGS)
+	@rm src/*.o
+	valgrind $(VALGRING_FLAGS) $(TARGET_TEST) --unittest
 
 leak: $(TARGET)
 	valgrind $(VALGRING_FLAGS) ./$(TARGET) $(ARGS)
@@ -48,4 +54,3 @@ leak: $(TARGET)
 clean:
 	rm -f $(OBJS) $(TARGET) src/main.o
 	rm -rf build
-
