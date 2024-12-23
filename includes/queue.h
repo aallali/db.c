@@ -34,5 +34,7 @@ QueueNode *create_queue_node(void *element);
 void enqueue(Queue *q, void *element);
 
 void dequeue(Queue *q);
+int queue_size(Queue *q);
+
 
 #endif // QUEUE_H

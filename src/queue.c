@@ -26,6 +26,23 @@ Queue *create_queue() {
     return q;
 }
 
+int queue_size(Queue *q)
+{
+    int size;
+    QueueNode *tmp;
+
+    size = 0;
+    tmp = q->front;
+
+    while (tmp != NULL)
+    {
+        tmp = tmp->next;
+        size += 1;
+    }
+
+    return size;
+}
+
 void enqueue(Queue *q, void *element)
 {
     QueueNode *new_node = create_queue_node(element);
