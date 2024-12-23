@@ -14,6 +14,8 @@ so I decided to go back and build things brick by brick.
 - **`make run`**: Run the compiled executable binary.
 - **`make leak`**: Runs the binary with `valgrind` to check for memory leaks.
 - **`make clean`**: Removes all generated build files and binaries.
+- **`make test`**: Run all unit tests with valgrind checks
+- **`make test-single FILE="tests/test_crud_avl.c"`**: Run single file of unit tests with valgrind cecks as well
 
 ### **Checklist for Learnings:**
 <details>
