@@ -117,6 +117,22 @@ TEST_CASE(test_bst_lvl_order_traverse_print)
     bst_free_tree(&node);
 }
 
+TEST_CASE(test_bst_lvl_order_traverse_queue_print)
+{
+    BST_NODE *node = NULL;
+
+    bst_insert_node(&node, 50);
+    bst_insert_node(&node, 30);
+    bst_insert_node(&node, 60);
+    bst_insert_node(&node, 40);
+    bst_insert_node(&node, 70);
+
+    bst_lvl_order_traverse_queue(node, print_bst_node_value);
+    TEST_STREQUAL(temp_str, "50 30 60 40 70");
+
+    free(temp_str);
+    temp_str = NULL;
+    bst_free_tree(&node);
 }
 
 TEST_CASE(test_bst_delete_node)
