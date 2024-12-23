@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/13 13:37:42 by Abdellah A.                              */
-/*   Updated: 2024/12/23 03:01:39 by Abdellah A.                              */
+/*   Updated: 2024/12/23 16:27:36 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #include "bst.h"
@@ -104,11 +104,12 @@ void bst_lvl_order_traverse_queue(
     q = create_queue();
     enqueue(q, node);
 
-    while (q->front)
+    while (queue_is_empty(q) == false)
     {
-        BST_NODE *current = q->front->node;
-        dequeue(q);
+        BST_NODE *current = (BST_NODE *)dequeue(q);
+
         callback(current);
+
         if (current->left != NULL)
             enqueue(q, current->left);
 
@@ -215,8 +216,10 @@ BST_NODE *bst_delete_node(BST_NODE **root, int target)
     return *root;
 }
 
-void bst_free_tree(BST_NODE **node) {
-    if (*node != NULL) {
+void bst_free_tree(BST_NODE **node)
+{
+    if (*node != NULL)
+    {
         bst_free_tree(&(*node)->left);
         bst_free_tree(&(*node)->right);
         free(*node);
@@ -336,6 +339,7 @@ void bst_main_test()
 
         i++;
     }
+    bst_lvl_order_traverse_queue(node, print_node_value);
     /*
     Free the homies
     */
