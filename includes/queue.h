@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/23 02:52:18 by Abdellah A.                              */
-/*   Updated: 2024/12/23 03:01:22 by Abdellah A.                              */
+/*   Updated: 2024/12/23 16:20:57 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #ifndef QUEUE_H
@@ -34,7 +34,8 @@ QueueNode *create_queue_node(void *element);
 
 void enqueue(Queue *q, void *element);
 
-void dequeue(Queue *q);
+void* dequeue(Queue *q);
+
 int queue_size(Queue *q);
 
 bool queue_is_empty(Queue *q);

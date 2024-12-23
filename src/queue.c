@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/23 02:51:44 by Abdellah A.                              */
-/*   Updated: 2024/12/23 02:58:45 by Abdellah A.                              */
+/*   Updated: 2024/12/23 16:34:16 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #include <queue.h>
@@ -62,19 +62,21 @@ void enqueue(Queue *q, void *element)
     q->rear = q->rear->next;
 }
 
-void dequeue(Queue *q)
+void *dequeue(Queue *q)
 {
-    if (q->front == NULL)
-    {
-        printf("Queue Underflow\n");
-        return;
-    }
-    QueueNode *tmp = q->front;
+    QueueNode *tmp;
+    void*element;
+
+    if (queue_is_empty(q) == true)
+        return NULL;
+
+    tmp = q->front;
+    element = tmp->node;
     q->front = q->front->next;
-    if (q->front == NULL)
-    {
+
+    if (queue_is_empty(q) == true)
         q->rear = NULL;
-    }
+
     free(tmp);
-    return;
+    return element;
 }
