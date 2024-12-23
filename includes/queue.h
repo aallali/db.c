@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct QueueNode
 {
@@ -36,5 +37,6 @@ void enqueue(Queue *q, void *element);
 void dequeue(Queue *q);
 int queue_size(Queue *q);
 
+bool queue_is_empty(Queue *q);
 
 #endif // QUEUE_H
