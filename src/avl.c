@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/20 02:09:52 by Abdellah A.                              */
-/*   Updated: 2024/12/22 03:11:47 by Abdellah A.                              */
+/*   Updated: 2024/12/24 02:34:16 by Abdellah A.                              */
 /* ************************************************************************** */
 
 /*
@@ -267,6 +267,20 @@ AVL_NODE *avl_rotation_left(AVL_NODE *x)
     return y;
 }
 
+AVL_NODE *avl_find(AVL_NODE *node, int target)
+{
+    if (node == NULL)
+        return NULL;
+
+    if (target < node->value)
+        return avl_find(node->left, target);
+
+    if (target > node->value)
+        return avl_find(node->right, target);
+
+    return node;
+}
+
 /*
  ************************************************************
  *****************  AVL Print Tree Helpers  *****************
@@ -315,7 +329,11 @@ void avl_print_tree(AVL_NODE *node)
 
 void avl_main_test()
 {
-    AVL_NODE *node = avl_create_node(10);
+    AVL_NODE *node;
+    int target;
+    AVL_NODE *found_node;
+
+    node = avl_create_node(10);
     node = avl_insert_node(node, 20);
     node = avl_insert_node(node, 30);
     node = avl_insert_node(node, 40);
@@ -324,6 +342,14 @@ void avl_main_test()
 
     printf("Height of AVL tree is : %d", avl_height(node));
     avl_print_tree(node);
+
+    target = 55;
+    found_node = avl_find(node, target);
+
+    if (found_node != NULL)
+        printf("Node with value %d found: %d\n", target, found_node->value);
+    else
+        printf("Node with value %d not found.\n", target);
 
     /*
     Free My Homie (AVL lives matter)
