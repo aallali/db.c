@@ -31,6 +31,7 @@ AVL Tree:
 
 #include "avl.h"
 #include "helpers.h"
+#include "queue.h"
 
 AVL_NODE *avl_create_node(int value)
 {
@@ -281,6 +282,27 @@ AVL_NODE *avl_find(AVL_NODE *node, int target)
     return node;
 }
 
+void avl_lvlorder_traverse(AVL_NODE *node, void(callback)(AVL_NODE *node))
+{
+    Queue *q;
+
+    q = create_queue();
+    enqueue(q, node);
+
+    while (queue_is_empty(q) == false)
+    {
+        AVL_NODE *current = (AVL_NODE *)dequeue(q);
+
+        callback(current);
+        if (current->left != NULL)
+            enqueue(q, current->left);
+        if (current->right != NULL)
+            enqueue(q, current->right);
+    }
+
+    free(q);
+}
+
 void avl_inorder_traverse(AVL_NODE *node, void(callback)(AVL_NODE *node))
 {
     if (node == NULL)
@@ -337,6 +359,11 @@ void avl_print_tree(AVL_NODE *node)
  *     10  25  50
  */
 
+static void print_node_value(AVL_NODE *node)
+{
+    printf(" %d |", node->value);
+}
+
 void avl_main_test()
 {
     AVL_NODE *node;
@@ -364,6 +391,9 @@ void avl_main_test()
 
     avl_inorder_traverse(node, print_node_value);
     // output: 10 | 20 | 25 | 30 | 35 | 40 | 50 | 55 |
+    printf("\n");
+    avl_lvlorder_traverse(node, print_node_value);
+    // output: 30 | 20 | 40 | 10 | 25 | 35 | 50 | 55 |
     printf("\n");
     /*
     Free My Homie (AVL lives matter)
