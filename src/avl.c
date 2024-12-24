@@ -281,6 +281,16 @@ AVL_NODE *avl_find(AVL_NODE *node, int target)
     return node;
 }
 
+void avl_inorder_traverse(AVL_NODE *node, void(callback)(AVL_NODE *node))
+{
+    if (node == NULL)
+        return;
+
+    avl_inorder_traverse(node->left, callback);
+    callback(node);
+    avl_inorder_traverse(node->right, callback);
+}
+
 /*
  ************************************************************
  *****************  AVL Print Tree Helpers  *****************
@@ -340,8 +350,9 @@ void avl_main_test()
     node = avl_insert_node(node, 50);
     node = avl_insert_node(node, 25);
 
-    printf("Height of AVL tree is : %d", avl_height(node));
     avl_print_tree(node);
+
+    printf("Height of AVL tree is : %d\n", avl_height(node));
 
     target = 55;
     found_node = avl_find(node, target);
@@ -351,6 +362,9 @@ void avl_main_test()
     else
         printf("Node with value %d not found.\n", target);
 
+    avl_inorder_traverse(node, print_node_value);
+    // output: 10 | 20 | 25 | 30 | 35 | 40 | 50 | 55 |
+    printf("\n");
     /*
     Free My Homie (AVL lives matter)
     */
