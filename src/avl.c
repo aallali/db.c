@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/20 02:09:52 by Abdellah A.                              */
-/*   Updated: 2024/12/31 01:09:11 by Abdellah A.                              */
+/*   Updated: 2024/12/31 13:54:42 by Abdellah A.                              */
 /* ************************************************************************** */
 
 /*
@@ -170,6 +170,83 @@ AVL_NODE *avl_insert_node(AVL_NODE *root, int value)
         (root)->right = avl_rotation_right((root)->right);
         return avl_rotation_left(root);
     }
+    return root;
+}
+
+AVL_NODE *avl_delete_node(AVL_NODE *root, AVL_NODE *target)
+{
+    if (root == NULL)
+    {
+        return root;
+    }
+    // Start with BST delete logic
+    if (root->value > target->value)
+    {
+        root->left = avl_delete_node(root->left, target);
+    }
+    else if (root->value < target->value)
+    {
+        root->right = avl_delete_node(root->right, target);
+    }
+    else
+    {
+        // Case 1: no child
+        if (root->right == NULL && root->left == NULL)
+        {
+            free(root);
+
+            return NULL;
+        }
+        // Case 2: one child
+        else if (root->right == NULL || root->left == NULL)
+        {
+            AVL_NODE *tmp = (root->right) ? (root->right) : (root->left);
+            free(root);
+            root = tmp;
+        }
+        // Case 3: both children
+        else
+        {
+            AVL_NODE *proc = NULL;
+            AVL_NODE *suc = NULL;
+
+            avl_find_predecessor_successor(root, target->value, &proc, &suc);
+            root->value = suc->value;
+            root->right = avl_delete_node(root->right, suc);
+        }
+    }
+
+    if (root == NULL)
+        return root;
+
+    // Update height of the current node
+    avl_update_height(&root);
+
+    // Get balance factor
+    int balance = avl_get_balance(root);
+
+    // Left Left Case
+    if (balance > 1 && avl_get_balance(root->left) >= 0)
+        return avl_rotation_right(root);
+
+    // Left Right Case
+    if (balance > 1 && avl_get_balance(root->left) < 0)
+    {
+        root->left = avl_rotation_left(root->left);
+        return avl_rotation_right(root);
+    }
+
+    // Right Right Case
+    if (balance < -1 && avl_get_balance(root->right) <= 0)
+        return avl_rotation_left(root);
+
+    // Right Left Case
+    if (balance < -1 && avl_get_balance(root->right) > 0)
+    {
+        root->right = avl_rotation_right(root->right);
+        return avl_rotation_left(root);
+    }
+
     return root;
 }
 
@@ -417,8 +494,10 @@ void avl_main_test()
     node = avl_insert_node(node, 25);
 
     avl_print_tree(node);
+    node = avl_delete_node(node, avl_create_node(20));
+    avl_print_tree(node);
 
-    printf("Height of AVL tree is : %d\n", avl_height(node));
+    printf("Height of AVL tree is : %d\n", node->height);
 
     target = 55;
     found_node = avl_find(node, target);
@@ -428,17 +507,18 @@ void avl_main_test()
     else
         printf("Node with value %d not found.\n", target);
 
-    target = 30;
+    target = 20;
     AVL_NODE *proc = NULL;
     AVL_NODE *suc = NULL;
 
-    printf("\n:-----Target: [%d] :-----:\n", target);
     avl_find_predecessor_successor(node, target, &proc, &suc);
-    // print successor and predecessor
     if (proc != NULL)
         printf("Predecessor: %d\n", proc->value);
     if (suc != NULL)
         printf("Successor: %d\n", suc->value);
+    // print predecessor and successor as "prev < X < succ" if they exist
+    if (proc != NULL && suc != NULL)
+        printf("Predecessor %d < %d < %d Successor\n", proc->value, suc->value, target);
 
     printf("in order:    ");
     avl_inorder_traverse(node, print_node_value);
