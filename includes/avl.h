@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/20 12:55:28 by Abdellah A.                              */
-/*   Updated: 2024/12/31 13:56:04 by Abdellah A.                              */
+/*   Updated: 2024/12/31 14:33:14 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #ifndef AVL_H
@@ -37,8 +37,6 @@ AVL_NODE *avl_find(AVL_NODE *node, int target);
 AVL_NODE *avl_rotation_left(AVL_NODE *x);
 
 AVL_NODE *avl_rotation_right(AVL_NODE *y);
-
-int avl_height(AVL_NODE *node);
 
 int avl_get_balance(AVL_NODE *node);
 

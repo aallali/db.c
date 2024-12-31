@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/20 02:09:52 by Abdellah A.                              */
-/*   Updated: 2024/12/31 13:54:42 by Abdellah A.                              */
+/*   Updated: 2024/12/31 14:33:05 by Abdellah A.                              */
 /* ************************************************************************** */
 
 /*
@@ -294,20 +294,6 @@ int avl_get_balance(AVL_NODE *node)
     if (node == NULL)
         return 0;
     return HEIGHT_OR_ZERO(node->left) - HEIGHT_OR_ZERO(node->right);
-}
-
-int avl_height(AVL_NODE *node)
-{
-    if (node == NULL)
-        return 0;
-
-    int left_h = avl_height(node->left);
-    int right_h = avl_height(node->right);
-
-    if (left_h > right_h)
-        return left_h + 1;
-    else
-        return right_h + 1;
 }
 
 void avl_free_tree(AVL_NODE *node)
