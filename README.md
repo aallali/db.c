@@ -4,10 +4,6 @@ The goal of this program is to get me comfortable with the fundamentals of datab
 By that, I mean the data structures (B-Tree, B+Tree, etc.), indexing, hashing, storage, and memory management. 
 I aim to implement a basic non-relational database, starting with an in-memory approach and later adding persistence.
 
-I previously started a similar project ([safinaDB](https://github.com/aallali/safinaDB)) in Rust. 
-However, I realized that I lacked understanding of kernel-level execution and database internals, 
-so I decided to go back and build things brick by brick.
-
 ### Build and Execution Commands:
 - **`make`**: Compiles the source code.
 - **`db.bin`**: The compiled executable binary.
@@ -38,9 +34,10 @@ so I decided to go back and build things brick by brick.
 <summary><b>Step 2: Move to Balanced Trees</b></summary>
 
 - [ ] Learn and implement **AVL Trees**:
-  - [ ] Add necessary methods (delete, traverse, find)
+  - [x] Add necessary methods (find, create, insert, height, balance, traversal, prec/suc, delete)
   - [x] Add rotations (left, right, left-right, right-left).
-  - [ ] Maintain height balancing after insertion/deletion.
+  - [x] Maintain height balancing after insertion/deletion.
+  - [ ] Create Unit tests
 - [ ] Implement a **Red-Black Tree**:
   - [ ] Add node coloring (red or black).
   - [ ] Maintain balance after insertion/deletion.
