@@ -342,12 +342,8 @@ AVL_NODE *avl_rotation_right(AVL_NODE *y)
     x->right = y;
     y->left = z;
 
-    y->height = MAX(HEIGHT_OR_ZERO(y->left),
-                    HEIGHT_OR_ZERO(y->right)) +
-                1;
-    x->height = MAX(HEIGHT_OR_ZERO(x->left),
-                    HEIGHT_OR_ZERO(x->right)) +
-                1;
+    avl_update_height(&y);
+    avl_update_height(&x);
 
     return x;
 }
@@ -374,12 +370,8 @@ AVL_NODE *avl_rotation_left(AVL_NODE *x)
     y->left = x;
     x->right = z;
 
-    y->height = MAX(HEIGHT_OR_ZERO(y->left),
-                    HEIGHT_OR_ZERO(y->right)) +
-                1;
-    x->height = MAX(HEIGHT_OR_ZERO(x->left),
-                    HEIGHT_OR_ZERO(x->right)) +
-                1;
+    avl_update_height(&y);
+    avl_update_height(&x);
 
     return y;
 }
