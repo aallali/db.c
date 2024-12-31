@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/20 12:55:28 by Abdellah A.                              */
-/*   Updated: 2024/12/24 02:32:37 by Abdellah A.                              */
+/*   Updated: 2024/12/31 00:49:06 by Abdellah A.                              */
 /* ************************************************************************** */
 
 #ifndef AVL_H
@@ -43,6 +43,9 @@ int avl_get_balance(AVL_NODE *node);
 void avl_lvlorder_traverse(AVL_NODE *node, void(callback)(AVL_NODE *node));
 
 void avl_inorder_traverse(AVL_NODE *node, void(callback)(AVL_NODE *node));
+
+void avl_find_predecessor_successor(
+    AVL_NODE *node, int target, AVL_NODE **predecessor, AVL_NODE **successor);
 
 void avl_free_tree(AVL_NODE *node);
 

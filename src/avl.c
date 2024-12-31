@@ -6,7 +6,7 @@
 /*   License : Apache 2.0 with Commons Clause. See LICENSE file.              */
 /*                                                                            */
 /*   Created: 2024/12/20 02:09:52 by Abdellah A.                              */
-/*   Updated: 2024/12/24 02:34:16 by Abdellah A.                              */
+/*   Updated: 2024/12/31 01:09:11 by Abdellah A.                              */
 /* ************************************************************************** */
 
 /*
@@ -56,8 +56,8 @@ static void avl_update_height(AVL_NODE **node)
  * It performs necessary rotations to ensure the tree remains balanced after insertion.
  *
  * The rotations are as follows:
- * 
- * - Left Left Case: 
+ *
+ * - Left Left Case:
  *      - A single right rotation is performed.
  *      - e.g:
  *   Insert 1 into the tree:
@@ -85,8 +85,8 @@ static void avl_update_height(AVL_NODE **node)
  *          / \
  *         1   3
  *
- * - Left Right Case: 
- *      - A left rotation is performed on the left child, 
+ * - Left Right Case:
+ *      - A left rotation is performed on the left child,
  *      - followed by a right rotation on the root.
  *      - e.g:
  *   Insert 2 into the tree:
@@ -100,8 +100,8 @@ static void avl_update_height(AVL_NODE **node)
  *          / \
  *         1   3
  *
- * - Right Left Case: 
- *      - A right rotation is performed on the right child, 
+ * - Right Left Case:
+ *      - A right rotation is performed on the right child,
  *      - followed by a left rotation on the root.
  *      - e.g:
  *       Insert 2 into the tree:
@@ -171,6 +171,45 @@ AVL_NODE *avl_insert_node(AVL_NODE *root, int value)
         return avl_rotation_left(root);
     }
     return root;
+}
+
+void avl_find_predecessor_successor(
+    AVL_NODE *node, int target, AVL_NODE **predecessor, AVL_NODE **successor)
+{
+    if (node == NULL)
+        return;
+
+    if (node->value == target)
+    {
+        if (node->left != NULL)
+        {
+            AVL_NODE *tmp = node->left;
+            while (tmp->right != NULL)
+                tmp = tmp->right;
+            *predecessor = tmp;
+        }
+        if (node->right != NULL)
+        {
+            AVL_NODE *tmp = node->right;
+            while (tmp->left != NULL)
+                tmp = tmp->left;
+            *successor = tmp;
+        }
+        return;
+    }
+
+    if (node->value > target)
+    {
+        *successor = node;
+        avl_find_predecessor_successor(
+            node->left, target, predecessor, successor);
+    }
+    else
+    {
+        *predecessor = node;
+        avl_find_predecessor_successor(
+            node->right, target, predecessor, successor);
+    }
 }
 
 int avl_get_balance(AVL_NODE *node)
@@ -389,12 +428,25 @@ void avl_main_test()
     else
         printf("Node with value %d not found.\n", target);
 
+    target = 30;
+    AVL_NODE *proc = NULL;
+    AVL_NODE *suc = NULL;
+
+    printf("\n:-----Target: [%d] :-----:\n", target);
+    avl_find_predecessor_successor(node, target, &proc, &suc);
+    // print successor and predecessor
+    if (proc != NULL)
+        printf("Predecessor: %d\n", proc->value);
+    if (suc != NULL)
+        printf("Successor: %d\n", suc->value);
+
+    printf("in order:    ");
     avl_inorder_traverse(node, print_node_value);
-    // output: 10 | 20 | 25 | 30 | 35 | 40 | 50 | 55 |
-    printf("\n");
+    // output: 10 | 20 | 25 | 40 | 50 |
+    printf("\nlevel order: ");
     avl_lvlorder_traverse(node, print_node_value);
-    // output: 30 | 20 | 40 | 10 | 25 | 35 | 50 | 55 |
-    printf("\n");
+    // output: 25 | 20 | 40 | 10 | 50 |
+
     /*
     Free My Homie (AVL lives matter)
     */
