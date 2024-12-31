@@ -6,7 +6,7 @@
 #    License : Apache 2.0 with Commons Clause. See LICENSE file.               #
 #                                                                              #
 #    Created: 2024/12/13 13:37:42 by Abdellah A.                               #
-#    Updated: 2024/12/23 01:08:12 by Abdellah A.                               #
+#    Updated: 2024/12/31 13:00:42 by Abdellah A.                               #
 # **************************************************************************** #
 
 # Compiler and flags
@@ -34,6 +34,10 @@ $(TARGET): $(OBJS) $(MAIN:.c=.o)
 	@rm -f $(OBJS) src/main.o
 
 run: $(TARGET)
+	./$(TARGET) $(ARGS)
+ 
+run-unsafe:
+	$(MAKE) CFLAGS="-g -Iincludes" all
 	./$(TARGET) $(ARGS)
 	
 test: $(OBJS)
