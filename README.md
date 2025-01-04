@@ -4,6 +4,7 @@ The goal of this program is to get me comfortable with the fundamentals of datab
 By that, I mean the data structures (B-Tree, B+Tree, etc.), indexing, hashing, storage, and memory management. 
 I aim to implement a basic non-relational database, starting with an in-memory approach and later adding persistence.
 
+---
 ### Build and Execution Commands:
 - **`make`**: Compiles the source code.
 - **`db.bin`**: The compiled executable binary.
@@ -13,6 +14,15 @@ I aim to implement a basic non-relational database, starting with an in-memory a
 - **`make test`**: Run all unit tests with valgrind checks
 - **`make test-single FILE="tests/test_crud_avl.c"`**: Run single file of unit tests with valgrind cecks as well
 
+---
+### Learning Progress:
+To document my learning journey, I wrote blog posts about the concepts I explored and applied. Feel free to check them out:
+1. [Understand AVL Trees](https://blog.allali.me/blog/databases/avl-tree/)
+1. [Understand Binary Search Trees (BST)](https://blog.allali.me/blog/databases/binary-search-tree/)
+
+***`If you spot any inaccuracies or have suggestions, I’d greatly appreciate your feedback—feel free to leave a comment!`***
+
+---
 ### **Checklist for Learnings:**
 <details>
 <summary><b>Step 1: Deepen Understanding of Binary Search Trees (BST)</b></summary>
